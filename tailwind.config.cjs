@@ -2,7 +2,13 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.res.mjs"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'ground': '#121212',
+        'surface': '#1e1e1e',
+        'accent': '#353535',
+      },
+    },
   },
   plugins: [],
 };
