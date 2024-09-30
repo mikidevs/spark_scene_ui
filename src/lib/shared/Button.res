@@ -5,7 +5,7 @@ let make = (~type_, ~onClick=?, ~children) => {
         | None => (_) => ()
     }
 
-    <button type_ className="w-32 py-3 mx-auto bg-cyan-600 font-medium rounded-lg text-md border border-accent focus:outline-none focus:ring-gray-700 hover:bg-cyan-800"
+    <button type_ className="w-28 py-2 mx-auto bg-primary font-medium rounded-lg text-md text-dark border border-secondary focus:outline-none hover:bg-secondary"
         onClick
     >{
        children

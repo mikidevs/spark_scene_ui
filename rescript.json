@@ -16,7 +16,8 @@
   "bs-dependencies": [
     "@rescript/core",
     "@rescript/react",
-    "@dck/rescript-react-query"
+    "@dck/rescript-react-query",
+    "@dck/rescript-ky"
   ],
   "bsc-flags": [
     "-open RescriptCore"

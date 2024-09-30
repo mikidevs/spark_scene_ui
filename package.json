@@ -12,12 +12,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dck/rescript-ky": "^2.1.0",
     "@dck/rescript-react-query": "^1.0.3",
     "@rescript/core": "^1.6.0",
     "@rescript/react": "^0.12.1",
     "@tanstack/react-query": "^5.56.2",
+    "ky": "^1.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.53.0",
     "rescript": "^11.1.4"
   },
   "devDependencies": {

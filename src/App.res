@@ -25,7 +25,7 @@ let make = () => {
               }
           </Layout>
         }
-      | _ => <div> { React.string("Not Found") } </div>
+      | _ => <></>
     }
   } </ReactQuery.QueryClientProvider>
 }
