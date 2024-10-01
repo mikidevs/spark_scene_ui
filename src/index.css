@@ -6,3 +6,11 @@
   color: white;
   letter-spacing: 0.025em;
 }
+
+.spark-btn {
+  @apply w-28 py-2 mx-auto bg-primary font-medium rounded-lg text-dark border border-secondary focus:outline-none hover:bg-secondary
+} 
+
+.spark-input {
+  @apply bg-ground border border-accent p-2.5 text-sm rounded outline outline-0 hover:border-highlight focus:outline-highlight focus:outline-1 
+}
