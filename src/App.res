@@ -6,7 +6,7 @@ let make = () => {
   <ReactQuery.QueryClientProvider client> {
     switch url.path {
       | list{} => <Landing/>
-      | list{"register"} => <Register/>
+      | list{"register"} => <RegisterForm/>
       | list{"login"} => <Login/>
       | list{route} =>
         if (route === "not-found") {

@@ -17,10 +17,17 @@ type options = {
 }
 
 type fieldError = {
-    type_: string,
+    message?: string,
+    @as("type") type_: string,
     ref?: unknown,
-    types?: unknown,
-    message?: string
+}
+
+type formState<'errors> = {
+    isDirty: bool,
+    isSubmitted: bool,
+    isLoading: bool,
+    isValid: bool,
+    errors: 'errors
 }
 
 type submitHandler<'data> = ('data) => unit 
@@ -31,6 +38,7 @@ type useFormRegister = (~name: string, ~options: options=?) => JsxDOMU.domProps
 
 type useFormReturn<'data, 'errors> = {
     register: useFormRegister,
+    formState: formState<'errors>,
     handleSubmit: (~onValid: submitHandler<'data>, ~onInvalid: submitErrorHandler<'errors>=?) => JsxEventU.Mouse.t => unit
 }
 
