@@ -37,12 +37,9 @@ let make = () => {
     })
 
     let useForm: ReactHookForm.useFormReturn<RegisterUser.t, RegisterUser.errors> = ReactHookForm.useForm()
-    let { register, formState: { errors }, handleSubmit } = useForm
+    let { register, watch, formState: { errors }, handleSubmit } = useForm
 
-    React.useEffect(() => {
-        Console.log(errors)
-        None
-    }, [errors])
+    let currentPassword = watch("password")
 
     let onSubmit: ReactHookForm.submitHandler<RegisterUser.t> = registerUser => mutate(registerUser)
 
@@ -56,38 +53,45 @@ let make = () => {
                 <a className="spark-link" onClick={ (_) => push("/login") }>{ React.string("Log in") }</a>
             </div>
             <form className="flex flex-col gap-6 pb-5">
-                <div className="relative">
-                    <label htmlFor="full-name" className="block pb-2">{ React.string("User Name") }</label>
-                    <input { ...register(~name="fullName", ~options={ required: true }) }
-                        id="full-name"  placeholder="Name Surname" type_="text" 
-                        className={"spark-input " ++ { switch errors.fullName {
-                            | Some(_) => "!border-error focus:outline-error"
-                            | None => ""
-                        }}}
-                    />
-                    {
-                        OptionGuard.fn(~on=errors.fullName, (error) => {
-                            <BooleanGuard on={ error.type_ === "required" }>
-                                <p className="spark-error absolute top-18">{React.string("User name is required")}</p>
-                            </BooleanGuard>
-                        })
+                <LabelledInput 
+                    id="full-name" label="User Name" placeholder="Name Surname" type_="text"
+                    fieldError=errors.fullName register=register(~name="fullName", ~options={ required: true })
+                    errorMessages={ error =>
+                        <BooleanGuard on={ error.type_ === "required" }>
+                            <p className="spark-error absolute top-18">{ React.string("User name is required") }</p>
+                        </BooleanGuard>
                     }
-                </div>
-                <div>
-                    <label htmlFor="email" className="block pb-2">{ React.string("Email") }</label>
-                    <input { ...register(~name="email", ~options={ required: true }) }
-                        id="email" className="spark-input" placeholder="email@example.com" type_="text" />
-                </div>
-                <div>
-                    <label htmlFor="password" className="block pb-2">{ React.string("Password") }</label>
-                    <input { ...register(~name="password", ~options={ required: true, minLength: 8 })}
-                        id="password" className="spark-input" placeholder="•••••••••" type_="password" />
-                </div>
-                <div>
-                    <label htmlFor="confirm-password" className="block pb-2">{ React.string("Confirm Password") }</label>
-                    <input { ...register(~name="confirmPassword", ~options={ required: true, minLength: 8 })}
-                        id="confirm-password" className="spark-input" placeholder="•••••••••" type_="password" />
-                </div>
+                />
+                <LabelledInput 
+                    id="email" label="Email" placeholder="email@example.com" type_="email"
+                    fieldError=errors.email register=register(~name="email", ~options={ required: true })
+                    errorMessages={ error =>
+                        <BooleanGuard on={ error.type_ === "required" }>
+                            <p className="spark-error absolute top-18">{ React.string("Email is required") }</p>
+                        </BooleanGuard>
+                    }
+                />
+                <LabelledInput 
+                    id="password" label="Password" placeholder="•••••••••" type_="password"
+                    fieldError=errors.password register=register(~name="password", ~options={ required: true, minLength: 8 })
+                    errorMessages={ error =>
+                        <BooleanGuard on={ error.type_ === "required" }>
+                            <p className="spark-error absolute top-18">{ React.string("Password is required") }</p>
+                        </BooleanGuard>
+                    }
+                />
+                <LabelledInput 
+                    id="confirm-password" label="Confirm Password" placeholder="•••••••••" type_="password"
+                    fieldError=errors.password
+                    register=register(~name="confirmPassword", ~options={ required: true, minLength: 8, validate: {
+                        (confirm) => currentPassword === confirm 
+                    }})
+                    errorMessages={ error =>
+                        <BooleanGuard on={ error.type_ === "required" }>
+                            <p className="spark-error absolute top-18">{ React.string("Confirm password is required") }</p>
+                        </BooleanGuard>
+                    }
+                />
             </form>
             { if (isPending) {
                 Jsx.string("Registering user...")

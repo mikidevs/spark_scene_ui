@@ -13,7 +13,8 @@ type options = {
     minLength?: int,
     pattern?: string,
     required?: bool,
-    disabled?: bool
+    disabled?: bool,
+    validate?: string => bool
 }
 
 type fieldError = {
@@ -38,6 +39,7 @@ type useFormRegister = (~name: string, ~options: options=?) => JsxDOMU.domProps
 
 type useFormReturn<'data, 'errors> = {
     register: useFormRegister,
+    watch: string => string,
     formState: formState<'errors>,
     handleSubmit: (~onValid: submitHandler<'data>, ~onInvalid: submitErrorHandler<'errors>=?) => JsxEventU.Mouse.t => unit
 }
